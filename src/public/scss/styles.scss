@@ -1,0 +1,32 @@
+@import "./global.scss";
+/*!
+ * Project_Name: Startup Landing Page
+ * Author: Themezy
+ * Email: support@themezy.com
+ * Url: http://themezy.com
+ */
+/*=========================================== 
+ * Importing CSS Libraries
+ *===========================================*/
+ @import 	"App",
+ 			"libs/settings",
+ 			"libs/mixins",
+ 			"libs/normalize",
+ 			"libs/global",
+ 			"libs/components",
+
+ 			// importing bootstrap grid framework
+ 			"libs/bootstrap-grid/settings",
+ 			"libs/bootstrap-grid/mixins",
+ 			"libs/bootstrap-grid/grid",
+
+			// importing layout styles
+ 			"layout/header",
+ 			"layout/content",
+ 			"layout/footer",
+
+ 			// importing template layout styles
+ 			"pages/category",
+
+ 			// importing template component styles
+ 			"pages/_result-component";

@@ -1,0 +1,244 @@
+@import "./variables";
+
+.btn {
+    min-height: 40px;
+    width: 100%;
+    box-shadow: none;
+    &.btn-primary:not(:disabled):not(.disabled).active, &.btn-primary:not(:disabled):not(.disabled):active, &.show>.btn-primary.dropdown-toggle {
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
+.btn-primary, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    background-color: $primary;
+    border-color: $primary;
+}
+.btn-grey {
+    background-color: $grey2;
+    border-color: $grey2;
+    color: $white;
+    &:hover, &.btn-primary:not(:disabled):not(.disabled).active, &.btn-primary:not(:disabled):not(.disabled):active, &.show>.btn-primary.dropdown-toggle {
+        background-color: $grey3;
+        border-color: $grey3;
+        color: $white;
+    }
+}
+.btn-orange {
+    background-color: $orange1;
+    border-color: $orange1;
+    color: $white;
+    &:hover, &.btn-primary:not(:disabled):not(.disabled).active, &.btn-primary:not(:disabled):not(.disabled):active, &.show>.btn-primary.dropdown-toggle {
+        background-color: $orange2;
+        border-color: $orange2;
+        color: $white;
+    }
+}
+.btn-green {
+    background-color: $green1;
+    border-color: $green1;
+    color: $white;
+    &:hover,  &.btn-primary:not(:disabled):not(.disabled).active, &.btn-primary:not(:disabled):not(.disabled):active, &.show>.btn-primary.dropdown-toggle {
+        background-color: $green2;
+        border-color: $green2;
+        color: $white;
+    }
+}
+.modal {
+    color: $black;
+    .modal-dialog {
+        max-width: calc(100% - 40px);
+        margin: auto;
+    }
+    .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+        text-align: center;
+        font-size: 14px;
+    }
+    .modal-header, .modal-footer {
+        border: none;
+    }
+    .modal-header {
+        .icon-box i {
+            font-size: 90px;
+        }
+        .modal-title {
+            text-align: center;
+            font-size: 26px;
+            margin: 30px 0 -10px;
+        }
+    }
+    .modal-footer {
+        .btn {
+            width: auto;
+            margin: 0;
+            &:first-child {
+                margin-right: 5px;
+            }
+            &:last-child {
+                margin-left: 5px;
+            }
+        }
+    }
+    &.delete .modal-dialog {
+        width: 400px;
+        .modal-header .icon-box i {
+            color: $orange1;
+        }
+    }
+    &.edit, &.add {
+        .modal-dialog {
+            width: 400px;
+            .modal-header .modal-title .sub-title {
+                color: $grey3;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+            }
+        }
+        &.knowledge .modal-dialog {
+            width: 1000px;
+        }
+    }
+    &.edit .modal-header .icon-box i {
+        color: $primary;
+    }
+    &.add .modal-header .icon-box i {
+        color: $green1;
+    }
+}
+form {
+    .fa {
+        font-size: 21px;
+    }
+    .fa-paper-plane {
+        font-size: 18px;
+    }
+    .fa-check {
+        color: $white;
+        left: 17px;
+        top: 18px;
+        font-size: 7px;
+        position: absolute;
+    }
+    .form-row>.col {
+        margin: 7px auto;
+        text-align: left;
+        .form-control, .btn {
+            border-left: none;
+            padding-left: 0;
+            &:focus {
+                border-color: $grey1;
+            }
+        }
+        textarea.form-control {
+            padding-left: 12px;
+            border-left: 1px solid $grey1;
+            color: $black;
+        }
+        label {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .input-group-prepend {
+            .input-group-text {
+                background-color: $white;
+                i {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+.tree {
+    position: relative;
+    background: $white;
+    padding: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $black;
+    text-align: left;
+    span .btn {
+        padding: 0 2px;
+        line-height: 1;
+        &.settings, &.settings:hover {
+            margin: 0;
+        }
+    }
+    ul {
+        padding-left: 5px;
+        list-style: none;
+        li {
+            position: relative;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 15px;
+            box-sizing: border-box;
+            &:before {
+                position: absolute;
+                top: 15px;
+                left: 0;
+                width: 10px;
+                height: 1px;
+                margin: auto;
+                content: '';
+                background-color: $grey3;
+            }
+            &:after {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 1px;
+                height: 100%;
+                content: '';
+                background-color: $grey3;
+            }
+            &:last-child:after {
+                height: 15px;
+            }
+        }
+        a {
+            cursor: pointer;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+    .actions {
+        opacity: 0;
+        width: 0;
+    }
+    .line-item {
+        &:hover .actions {
+            opacity: 1;
+            width: auto;
+            transition: all 1s ease-in-out;
+        }
+        .content {
+            cursor: default;
+            > i::after {
+                color: $primary;
+                cursor: pointer;
+                font-size: 20px;
+                font-style: initial;
+                font-family: 'fontawesome';
+                content: '\f07b';
+            }
+        }
+        ~ ul {
+            display: none;
+        }
+        &.show {
+            .content > i::after {
+                content: '\f07c';
+            }
+            ~ ul {
+                display: block;
+            }
+        }
+    }
+}
