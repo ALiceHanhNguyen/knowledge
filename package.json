@@ -2,7 +2,7 @@
   "name": "master-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://alicehanhnguyen.github.io",
+  "homepage": "https://alicehanhnguyen.github.io/knowledge",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

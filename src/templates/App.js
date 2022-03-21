@@ -12,7 +12,7 @@ import './../public/scss/styles.scss';
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename={'/knowledge'}>
       	<Switch>
 	        <Route exact path="/" component={Homepage} />
           <Route exact path="/category" component={Category} />
