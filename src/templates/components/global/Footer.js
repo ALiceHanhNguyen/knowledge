@@ -1,7 +1,8 @@
 import React from 'react';
-import { global } from '../../const/properties';
 
-const Footer = () => (
+import { global } from '../../../const';
+
+export const Footer = () => (
   <footer className='site-footer'>
     <div className='container'>
       <div className='social-links'>
@@ -13,5 +14,3 @@ const Footer = () => (
     </div>
   </footer>
 );
-
-export default Footer;

@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import Footer from '../components/global/Footer';
-import TopHeader from '../components/global/TopHeader';
-import { global } from '../const/properties';
-
-import SearchSession from '../components/SearchSession';
+import {global, validateInput, convertURIToPhrase, URI, CUM_TU} from '../../const';
+import {SearchSession, TopHeader, Footer} from '../components';
 
 import banner from './../../public/static/images/banner.jpg';
 
@@ -19,56 +16,75 @@ class NoMatch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      redirect: null
+      questionPhrase: '',
+      questionURI: '',
+      type: null,
+      redirect: null,
+      generalQuestionRdc: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.findTopicFollowNavigation = this.findTopicFollowNavigation.bind(this);
+    this.findByURI = this.findByURI.bind(this);
+    this.findByNavigation = this.findByNavigation.bind(this);
   }
-
   handleChange(event) {
-    const format = /[`!@#$%^&*()_+\-=[\]{}'"\\|<>/~]/;
-    this.setState({value: format.test(event.target.value) ? '' : event.target.value});
+    this.setState({
+      questionPhrase: validateInput.test(event.target.value) ? '' : event.target.value,
+      questionURI: validateInput.test(event.target.value) ? '' : event.target.value});
   }
 
   handleSubmit(event) {
-    if (this.state.value) {
+    if (this.state.questionPhrase) {
       this.setState({
-        redirect: '/category'
+        redirect: '/category',
+        type: CUM_TU
       });
     }
     event.preventDefault();
   }
-  findTopicFollowNavigation(value) {
-    if (value) {
-      this.setState({
-        value: value,
-        redirect: '/category'
-      })
+  findByNavigation(value) {
+    if (value && value !== '/') {
+      if (value === global['header.user.question']) {
+        this.setState({generalQuestionRdc: true});
+      } else {
+        const {category} = this.props;
+        this.setState({
+          questionPhrase: convertURIToPhrase(value, category ? category.questions : []),
+          questionURI: value,
+          redirect: '/category',
+          type: URI
+        })
+      }
     }
+  }
+  findByURI(e, value) {
+    e.preventDefault();
+    this.findByNavigation(value);
   }
   render() {
     const { globalData } = this.props;
     if (globalData.length <= 0) {
       return null;
     }
-    const { value, redirect } = this.state;
+    const { questionPhrase, redirect, type, questionURI, generalQuestionRdc } = this.state;
     if (redirect) {
-      return <Redirect to={{ pathname: redirect, state: { question: value } }} />
+      return <Redirect to={{ pathname: redirect, state: { question: questionURI, type } }} />
+    }
+    if (generalQuestionRdc) {
+      return <Redirect to={{ pathname: 'recomment-questions'}} />
     }
     const { categories } = globalData;
     return (
       <div className="site-content">
         <div className='top-header-content'>
-          <TopHeader categories={categories} findTopicFollowNavigation={ this.findTopicFollowNavigation } />
+          <TopHeader categories={categories} findByNavigation={ this.findByNavigation } />
         </div>
         <div className="hero-content">
           <h1>{ global['nomatch.banner.text.first'] }<br /><strong>{ global['nomatch.banner.text.second'] }</strong></h1>
         </div>
         <header className="hero mb-30" style={{backgroundImage: "url(" + banner + ")"}}>
-          <SearchSession value={ value } handleSubmit={ this.handleSubmit } handleChange={ this.handleChange } />
+          <SearchSession value={ questionPhrase } handleSubmit={ this.handleSubmit } handleChange={ this.handleChange } />
         </header>
         <main className="main-content">
           <div className="fullwidth-block">

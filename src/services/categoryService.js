@@ -1,22 +1,29 @@
 import axios from 'axios';
-import { returnSparqlUrl, getUrls } from './';
+import { returnSparqlUrl, getKeywordUrls, getResultFinding } from './';
 
 export const categoryService = { get, getAnswerQuestion };
 
-const urls = getUrls();
+const urls = getKeywordUrls();
 
-const urlOwl = returnSparqlUrl(urls.staticData);
 function get() {
-    return axios.get(urlOwl).then((response) => {
-       return response;
-    }).catch((err)=>{
-       console.log(err);
-    })
+   const keywordRequest = axios.get(returnSparqlUrl(urls.tuKhoa));
+   const questionRequest = axios.get(returnSparqlUrl(urls.cauHoiGoiY));
+
+   return axios.all([keywordRequest, questionRequest]).then(axios.spread((...responses) => {
+      const results = {
+         keywords: responses[0].data.results.bindings,
+         questions: responses[1].data.results.bindings
+      }
+      return results;
+   })).catch(errors => {
+      console.log(errors);
+   });
 }
-function getAnswerQuestion(question) {
-	return axios.get(returnSparqlUrl(urls.phepDoiHinh)).then((response) => {
-       return response;
-    }).catch((err)=>{
-       console.log(err);
-    });
+function getAnswerQuestion(questions) {
+   const requests = (questions || []).map(i => axios.get(returnSparqlUrl(getResultFinding(i))));
+	return axios.all(requests).then(axios.spread((...responses) => {
+      return responses;
+   })).catch(errors => {
+      console.log(errors);
+   });
 }

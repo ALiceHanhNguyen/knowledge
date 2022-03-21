@@ -2,12 +2,12 @@ const categoryModel = data => {
 	if (data.length > 0) {;
 		return data.map(item => {
             return {
-                khoi_lop: item.khoi_lop ? item.khoi_lop : null,
-                loai_hinh_hoc: item.loai_hinh_hoc ? item.loai_hinh_hoc : null,
-                chuyen_de: item.nhom_kien_thuc ? item.nhom_kien_thuc : null,
-                khoi_lop_uri: item.kl ? item.kl : null,
-                loai_hinh_hoc_uri: item.lhh ? item.lhh : null,
-                chuyen_de_uri: item.nkt ? item.nkt : null
+                khoi_lop: item.khoi_lop ? item.khoi_lop.value : '',
+                loai_hinh_hoc: item.loai_hinh_hoc ? item.loai_hinh_hoc.value : '',
+                chuyen_de: item.chuyen_de ? item.chuyen_de.value : '',
+                khoi_lop_uri: item.kl ? item.kl.value : '',
+                loai_hinh_hoc_uri: item.lhh ? item.lhh.value : '',
+                chuyen_de_uri: item.nkt ? item.nkt.value : ''
             };
 		});
 	} else {
@@ -18,7 +18,7 @@ const groupCategoryByGrade = data => {
     if (data.length > 0) {
         let result = [];
 		data.map(item => {
-            const index = result.findIndex(i => i.khoi_lop_uri.value === item.khoi_lop_uri.value);
+            const index = result.findIndex(i => i.khoi_lop_uri === item.khoi_lop_uri);
             if (index !== -1) {
                 result[index].nhom_chuyen_de.push(item);
             } else {
@@ -38,7 +38,7 @@ const groupCategoryByType = data => {
     if (data.length > 0) {
         let result = [];
 		data.map(item => {
-            const index = result.findIndex(i => i.loai_hinh_hoc_uri.value === item.loai_hinh_hoc_uri.value);
+            const index = result.findIndex(i => i.loai_hinh_hoc_uri === item.loai_hinh_hoc_uri);
             if (index !== -1) {
                 result[index].nhom_loai_hinh_hoc.push(item);
             } else {

@@ -1,7 +1,7 @@
 import React from 'react';
 import MathJax from 'react-mathjax2';
 
-const DisplayContent = ({content}) => (
+export const DisplayContent = ({content}) => (
     <div className='display-content'>
         <MathJax.Context input='ascii'>
             <div>
@@ -18,5 +18,3 @@ const DisplayContent = ({content}) => (
         </MathJax.Context>
     </div>
 );
-
-export default DisplayContent;

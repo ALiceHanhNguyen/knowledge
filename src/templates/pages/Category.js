@@ -1,24 +1,15 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { searchQuestion } from './../../actions';
-
-import Footer from './../components/global/Footer';
-import TopHeader from './../components/global/TopHeader';
-
-import SearchSession from './../components/SearchSession';
-import TopicsSession from './../components/TopicsSession';
-import AskQuestionsSession from './../components/AskQuestionsSession';
-import ResultQuestion from './../components/ResultQuestion';
-import TreeContent from './../components/TreeContent';
-
-import { USERS } from './../const/role';
-import {removeAccents, validateInput} from './../const/properties';
+import {Footer, TopHeader, SearchSession, TopicsSession, AskQuestionsSession, ResultQuestion, TreeContent} from '../components';
+import {validateInput, convertURIToPhrase, user, global, URI, CUM_TU} from '../../const';
 
 import banner from './../../public/static/images/banner.jpg';
 
 const mapDispatchToProps = dispatch => ({
-    searchQuestion: (question) => dispatch(searchQuestion(removeAccents(question)))
+    searchQuestion: (question, keywordList, type) => dispatch(searchQuestion(question, keywordList, type))
 });
 
 const mapStateToProps = state => {
@@ -30,77 +21,109 @@ const mapStateToProps = state => {
 class Category extends Component {
     constructor(props) {
       super(props);
-      this.state = {
-        value: props.location.state ? props.location.state.question : ''
-      };
+      const state = props.location.state;
+      let questionURI = '', questionPhrase = '';
+      if (state) {
+        questionURI = state.question;
+        questionPhrase = convertURIToPhrase(state.question, props.data.questions);
+      }
+      this.state = {questionURI, questionPhrase, generalQuestionRdc: false};
       window.history.replaceState(null, '');
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.findTopicFollowKeyword = this.findTopicFollowKeyword.bind(this);
-      this.findTopicFollowNavigation = this.findTopicFollowNavigation.bind(this);
+      this.findByURI = this.findByURI.bind(this);
+      this.findByNavigation = this.findByNavigation.bind(this);
     }
     componentDidMount() {
-      if (this.props.location.state && this.props.location.state.question) {
-        this.props.searchQuestion(removeAccents(this.props.location.state.question));
+      const {location, data, searchQuestion} = this.props;
+      if (location.state && location.state.question && location.state.type && data) {
+        const {question, type} = location.state;
+        searchQuestion(question, data, type);
       }
     }
     handleChange(event) {
-      this.setState({value: validateInput.test(event.target.value) ? '' : event.target.value});
+      this.setState({
+        questionURI: validateInput.test(event.target.value) ? '' : event.target.value,
+        questionPhrase: validateInput.test(event.target.value) ? '' : event.target.value
+      });
     }
 
     handleSubmit(event) {
       event.preventDefault();
-      if (this.state.value) {
-        const { searchQuestion } = this.props;
-        searchQuestion(removeAccents(this.state.value));
+      const {questionPhrase, questionURI} = this.state;
+      if (questionURI) {
+        this.setState({type: CUM_TU});
+        const { searchQuestion, data } = this.props;
+        searchQuestion(questionPhrase, data, CUM_TU);
         window.scrollTo(0, 0);
       }
     }
-    findTopicFollowKeyword(event, value) {
+    findByNavigation(value) {
+      if (value && value !== '/') {
+        if (value === global['header.user.question']) {
+          this.setState({generalQuestionRdc: true});
+        } else {
+          const { searchQuestion, data } = this.props;
+          this.setState({
+            questionURI: value,
+            type: URI,
+            questionPhrase: convertURIToPhrase(value, data.questions)
+          });
+          searchQuestion(value, data, URI);
+          window.scrollTo(0, 0);
+        }
+      }
+    }
+    findByURI(event, value) {
       event.preventDefault();
-      if (value && value !== '/') {
-        const { searchQuestion } = this.props;
-        this.setState({ value });
-        searchQuestion(removeAccents(value));
-        window.scrollTo(0, 0);
-      }
-    }
-    findTopicFollowNavigation(value) {
-      if (value && value !== '/') {
-        const { searchQuestion } = this.props;
-        this.setState({ value });
-        searchQuestion(removeAccents(value));
-        window.scrollTo(0, 0);
-      }
+      this.findByNavigation(value);
     }
     render() {
         const { data, globalData } = this.props;
-        const { value } = this.state;
+        const { questionPhrase, generalQuestionRdc } = this.state;
+      if (generalQuestionRdc) {
+          return <Redirect to={{ pathname: 'recomment-questions'}} />
+        }
         if (data.length <= 0 || globalData.length <= 0) {
           return null;
         }
-        const { answer} = data;
         const { questions, categories } = globalData;
-
+        const { answers } = data;
         return (
-            <div className="site-content-category">
+            <div className="site-content site-content-category">
               <div className='top-header-content'>
-                <TopHeader categories={categories} findTopicFollowNavigation={ this.findTopicFollowNavigation } role={ USERS } />
+                <TopHeader categories={categories} findByNavigation={ this.findByNavigation }/>
               </div>
               <header className="hero">
                 <div className="fullwidth-block footer-cta" style={{backgroundImage: "url(" + banner + ")"}}>
-                  <SearchSession value={ value } handleSubmit={ this.handleSubmit } handleChange={ this.handleChange } />
+                  <SearchSession value={ questionPhrase } handleSubmit={ this.handleSubmit } handleChange={ this.handleChange } />
                 </div>
               </header>
-              <main className="main-content container">
-                <div class="dashboard-sidebar"><TreeContent setmodalObjectContent={null}/></div>
-                <div className='fullwidth-block footer-cta'>
-                  { (answer || []).map((i, inx) => (
-                    <ResultQuestion answer={ i ? i : {} } key={inx} />
-                  )) }
-                </div>
-                <AskQuestionsSession questions={questions} findTopicFollowAskQuestionSession={ this.findTopicFollowKeyword } />
-                <TopicsSession categories={categories} findTopicFollowTopicSession={this.findTopicFollowKeyword} />
+              <main className="main-content">
+                {answers && answers.length && (
+                  <div className='fullwidth-block container'>
+                    <h2 className='section-title'>{user.result}</h2>
+                    {answers.map((item, index) => {
+                      if (item.type === 'level') {
+                        return (
+                          <div key={index} className='dashboard-sidebar'>
+                            <TreeContent data={item.data} handleClickURI={this.findByURI}/>
+                          </div>
+                        )
+                      }
+                      if (item.type === 'knowledge') {
+                        return (
+                          <div key={index} className='fullwidth-block'>
+                            <ResultQuestion data={item} />
+                          </div>
+                        )
+                      }
+                      return item;
+                    })}
+                  </div>
+                )}
+                <AskQuestionsSession questions={questions.slice(0, 6)} findTopicFollowAskQuestionSession={ this.findByURI } />
+                <TopicsSession categories={categories} findTopicFollowTopicSession={this.findByURI} />
               </main>
               <Footer />
             </div>

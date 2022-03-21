@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {user} from '../const/properties';
+import {user} from '../../const';
 
-const SearchSession = ({ value, handleSubmit, handleChange }) => (
+export const SearchSession = ({ value, handleSubmit, handleChange }) => (
     <div className='container'>
       <form className='subscribe-form' onSubmit={ handleSubmit }>
         <input type='text' placeholder={ user['search.title'] } onChange={ handleChange } value={ value } />
@@ -10,5 +10,3 @@ const SearchSession = ({ value, handleSubmit, handleChange }) => (
       </form>
     </div>
 );
-
-export default SearchSession;

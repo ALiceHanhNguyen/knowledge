@@ -1,14 +1,19 @@
-import { ADD_FETCHED_DATA_CATEGORY, SEARCH_QUESTION_DATA } from './../actions';
-import { topicModel } from './../models';
-
+import { GET_CATEGORY_DATA, SEARCH_QUESTION_DATA } from './../actions';
+import {keywordAndQuestionModel, answerModel} from './../models';
 export default function categoryReducer(state = [], action) {
     switch (action.type) {
-        case ADD_FETCHED_DATA_CATEGORY: {
-        	const data = action.payload.results.bindings;
-            return topicModel(data);
+        case GET_CATEGORY_DATA: {
+        	const data = action.payload;
+            const keywords = keywordAndQuestionModel(data.keywords);
+            const questions = keywordAndQuestionModel(data.questions);
+            return { ...state, keywords, questions };
         }
         case SEARCH_QUESTION_DATA: {
-            return { ...state, answer: action.payload.results.bindings };
+            let answers = (action.payload || []).map(i => answerModel(i.data));
+            answers = answers.filter(function( element ) {
+                return element !== undefined;
+            });
+            return {...state, answers};
         }
         default:
             return state;

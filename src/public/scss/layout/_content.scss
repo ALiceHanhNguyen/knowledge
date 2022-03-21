@@ -97,6 +97,9 @@
 	border: 1px solid $body-color;
 	border-radius: 5px;
 	margin-bottom: 50px;
+	@media (min-width: $screen-md-min) {
+		height: 100%;
+	}
 
 	.pricing-header{
 		background: $blue;
@@ -172,11 +175,14 @@ dl{
 mb-30 {
     margin-bottom: 30px;
 }
-
+.ask-question-title {
+	text-align: left;
+}
 .ask-question-content {
 	text-align: left;
 	overflow: hidden;
    	text-overflow: ellipsis;
+	margin-bottom: 10px;
    	display: -webkit-box;
    	-webkit-line-clamp: 5;
    	-webkit-box-orient: vertical;
