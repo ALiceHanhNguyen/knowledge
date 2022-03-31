@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 
 import {user} from '../../const';
 
-export const TopicsSession = ({categories, findTopicFollowTopicSession}) => (
+export const TopicsSession = ({categories, findTopicFollowTopicSession}) => {
+    (categories || []).sort((a,b) => (a.khoi_lop > b.khoi_lop) ? 1 : ((b.khoi_lop > a.khoi_lop) ? -1 : 0));
+    return (
     <div className="fullwidth-block">
         <div className="container">
             <h2 className="section-title">{ user['object.title'] }</h2><br />
@@ -34,4 +36,4 @@ export const TopicsSession = ({categories, findTopicFollowTopicSession}) => (
             </div>
         </div>
     </div>
-);
+)};

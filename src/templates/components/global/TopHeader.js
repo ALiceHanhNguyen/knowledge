@@ -4,7 +4,9 @@ import { Nav } from 'react-bootstrap';
 import headerBanner from './../../../public/static/images/banner-header.png';
 import { global } from '../../../const';
 
-export const TopHeader = ({ categories, findByNavigation}) => (
+export const TopHeader = ({ categories, findByNavigation}) => {
+    (categories || []).sort((a,b) => (a.khoi_lop > b.khoi_lop) ? 1 : ((b.khoi_lop > a.khoi_lop) ? -1 : 0))
+    return (
     <div className='header-top container'>
         <div className='header-banner'>
             <a href={ global['header.logo.link'] } title={ global['header.logo.name'] } rel="noopener noreferrer" target='_blank'>
@@ -27,4 +29,4 @@ export const TopHeader = ({ categories, findByNavigation}) => (
             </Nav.Item>
         </Nav>
     </div>
-);
+)};

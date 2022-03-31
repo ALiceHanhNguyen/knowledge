@@ -23,7 +23,7 @@ export const user = {
     'readmore': 'Đọc thêm',
     'discovery': 'Tìm kiếm',
     'search.title': 'Nhập những gì bạn muốn biết về...',
-    'object.per.year': ' chuyên đề/ năm',
+    'object.per.year': ' chuyên đề / lớp',
     'frequently.questions': 'Các câu hỏi thường gặp',
     'object.title': 'Những chuyên đề bạn cần quan tâm',
     'feature.title': 'Những ưu điểm vượt bật của hệ thống',
