@@ -177,6 +177,7 @@ mb-30 {
 }
 .ask-question-title {
 	text-align: left;
+	text-transform: capitalize;
 }
 .ask-question-content {
 	text-align: left;
@@ -186,4 +187,17 @@ mb-30 {
    	display: -webkit-box;
    	-webkit-line-clamp: 5;
    	-webkit-box-orient: vertical;
+}
+.title {
+	margin-top: 20px;
+}
+.content {
+	text-align: left;
+	p {
+		margin: 0.2rem 0;
+	}
+	img {
+		display: block;
+		margin: 20px auto;
+	}
 }

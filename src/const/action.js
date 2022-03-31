@@ -3,6 +3,7 @@ export const KHOI_LOP = 'KHOI_LOP';
 export const LOAI_HINH_HOC = 'LOAI_HINH_HOC';
 export const CHUYEN_DE = 'CHUYEN_DE';
 export const NHOM_KIEN_THUC = 'NHOM_KIEN_THUC';
+export const NOI_DUNG = 'NOI_DUNG';
 
 export const URI = 'URI';
 export const CUM_TU = 'CUM_TU';

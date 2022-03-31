@@ -6,10 +6,10 @@ export const DisplayContent = ({content}) => (
         <MathJax.Context input='ascii'>
             <div>
             {
-                (content ? content.toString().split('-v-') : []).map((i, index) => {
+                (content ? content.toString().replaceAll('margin-top: 0', 'margin-top: 0;display: inline-block;').split('-v-') : []).map((i, index) => {
                     switch(i.length > 3 && i.substring(0, 3)) {
-                        case 'Fml': return <MathJax.Node inline key={index}>{ i.substring(3, i.length) }</MathJax.Node>;
-                        case 'Img': return <img key={index} src={process.env.PUBLIC_URL + `/images/${i.substring(3, i.length)}`} alt=''/>
+                        case 'Fml': return <MathJax.Node inline key={index}>{ i.substring(4, i.length) }</MathJax.Node>;
+                        case 'Img': return '';
                         default: return <span key={index} dangerouslySetInnerHTML={{__html: i}}/>
                     }
                 })

@@ -11,11 +11,11 @@ export const TopHeader = ({ categories, findByNavigation}) => (
                 <img src={headerBanner} alt={ global['header.logo.name'] } role="presentation" />
             </a>
         </div>
-        <Nav defaultActiveKey="/knowledge"
+        <Nav defaultActiveKey="/"
             onSelect={(selectedKey) => findByNavigation(selectedKey)}
         >
             <Nav.Item>
-            <Nav.Link href="/knowledge">{ global['header.user.home'] }</Nav.Link>
+            <Nav.Link href="/">{ global['header.user.home'] }</Nav.Link>
             </Nav.Item>
             {(categories || []).map((item, index) => (
                 <Nav.Item key={index}>

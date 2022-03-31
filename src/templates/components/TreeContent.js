@@ -16,7 +16,7 @@ export function TreeContent({data, handleClickURI}) {
                             <div className={`line-item ${hasCategory_1 && 'show'}`}>
                                 <span className='content'>
                                     {hasCategory_1 && <i onClick={(e) => handleClick(e)}></i>} 
-                                    <span onClick={(e) => handleClickURI(e, item.uri)}> {item.name}</span>
+                                    <span className='tree-text' onClick={(e) => handleClickURI(e, item.uri)}> {item.name}</span>
                                 </span>
                             </div>
                             {hasCategory_1 && (
@@ -28,7 +28,7 @@ export function TreeContent({data, handleClickURI}) {
                                             <div className={`line-item ${hasCategory_2 && 'show'}`}>
                                                 <span className='content'>
                                                     {hasCategory_2 && <i onClick={(e) => handleClick(e)}></i>} 
-                                                    <span onClick={(e) => handleClickURI(e, lv1.uri)}> {lv1.name}</span>
+                                                    <span className='tree-text' onClick={(e) => handleClickURI(e, lv1.uri)}> {lv1.name}</span>
                                                 </span>
                                             </div>
                                             {hasCategory_2 && (
@@ -40,7 +40,7 @@ export function TreeContent({data, handleClickURI}) {
                                                             <div className={`line-item ${hasCategory_3 && 'show'}`}>
                                                                 <span className='content'>
                                                                     {hasCategory_3 && <i onClick={(e) => handleClick(e)}></i>} 
-                                                                    <span onClick={(e) => handleClickURI(e, lv2.uri)}> {lv2.name}</span>
+                                                                    <span className='tree-text' onClick={(e) => handleClickURI(e, lv2.uri)}> {lv2.name}</span>
                                                                 </span>
                                                             </div>
                                                             {hasCategory_3 && (
@@ -52,7 +52,7 @@ export function TreeContent({data, handleClickURI}) {
                                                                             <div className={`line-item ${hasCategory_4 && 'show'}`}>
                                                                             <span className='content'>
                                                                                 {hasCategory_4 && <i onClick={(e) => handleClick(e)}></i>} 
-                                                                                <span onClick={(e) => handleClickURI(e, lv3.uri)}> {lv3.name}</span>
+                                                                                <span className='tree-text' onClick={(e) => handleClickURI(e, lv3.uri)}> {lv3.name}</span>
                                                                             </span>
                                                                             </div>
                                                                         </li>
