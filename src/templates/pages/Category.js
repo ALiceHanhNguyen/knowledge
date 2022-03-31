@@ -110,15 +110,15 @@ class Category extends Component {
                             <TreeContent data={item.data} handleClickURI={this.findByURI}/>
                           </div>
                         )
+                      } else if (item.type === 'knowledge') {
+                          return (
+                            <div key={index} className='fullwidth-block'>
+                              <ResultQuestion data={item.data} />
+                            </div>
+                          )
+                      } else {
+                        return item;
                       }
-                      if (item.type === 'knowledge') {
-                        return (
-                          <div key={index} className='fullwidth-block'>
-                            <ResultQuestion data={item} />
-                          </div>
-                        )
-                      }
-                      return item;
                     })}
                   </div>
                 )}

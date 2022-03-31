@@ -4,18 +4,20 @@ import { Nav } from 'react-bootstrap';
 import headerBanner from './../../../public/static/images/banner-header.png';
 import { global } from '../../../const';
 
-export const TopHeader = ({ categories, findByNavigation}) => (
+export const TopHeader = ({ categories, findByNavigation}) => {
+    (categories || []).sort((a,b) => (a.khoi_lop > b.khoi_lop) ? 1 : ((b.khoi_lop > a.khoi_lop) ? -1 : 0))
+    return (
     <div className='header-top container'>
         <div className='header-banner'>
             <a href={ global['header.logo.link'] } title={ global['header.logo.name'] } rel="noopener noreferrer" target='_blank'>
                 <img src={headerBanner} alt={ global['header.logo.name'] } role="presentation" />
             </a>
         </div>
-        <Nav defaultActiveKey="/knowledge"
+        <Nav defaultActiveKey="/"
             onSelect={(selectedKey) => findByNavigation(selectedKey)}
         >
             <Nav.Item>
-            <Nav.Link href="/knowledge">{ global['header.user.home'] }</Nav.Link>
+            <Nav.Link href="/">{ global['header.user.home'] }</Nav.Link>
             </Nav.Item>
             {(categories || []).map((item, index) => (
                 <Nav.Item key={index}>
@@ -27,4 +29,4 @@ export const TopHeader = ({ categories, findByNavigation}) => (
             </Nav.Item>
         </Nav>
     </div>
-);
+)};

@@ -103,10 +103,9 @@ export const answerModel = data => {
                     });
                 }
             } else {
-                result = convertData(convertByKnowledgeAttrs(data.results.bindings));
+                result = [convertData(convertByKnowledgeAttrs(data.results.bindings))];
             }
-            result.type = 'knowledge';
-            return result;
+            return {data: result, type: 'knowledge'};
         } else {
             // levels
             let result = null;

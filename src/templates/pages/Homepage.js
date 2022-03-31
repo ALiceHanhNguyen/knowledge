@@ -95,7 +95,7 @@ class Homepage extends Component {
               <h2 className='section-title'>{user['feature.title']}</h2><br />
               <div className='row'>
                 {features.map((item, index) => (
-                  <div className='col-md-3 col-sm-6' key={index}>
+                  <div className='col-md col-sm-12' key={index}>
                     <div className='feature'>
                       <div className='feature-icon'><img src={process.env.PUBLIC_URL + `/images/${item.hinh_anh}`} alt='' className='icon' /></div>
                       <h3 className='feature-title'>{item.tieu_de}</h3>

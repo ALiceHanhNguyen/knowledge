@@ -12,14 +12,14 @@ import './../public/scss/styles.scss';
 function App() {
   return (
     <div className="App">
-      <Router basename={'/knowledge'}>
+      <Router>
       	<Switch>
 	        <Route exact path="/" component={Homepage} />
           <Route exact path="/category" component={Category} />
           <Route exact path="/recomment-questions" component={RecommentQuestion} />
 	   
 	        <Route component={NoMatch}/>
-        </Switch>
+      </Switch>
       </Router>
     </div>
   );

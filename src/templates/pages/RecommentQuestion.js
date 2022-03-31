@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import {Footer, TopHeader, SearchSession, TopicsSession, QuestionsSession} from '../components';
-import {global, validateInput, convertURIToPhrase, URI, CUM_TU} from '../../const';
+import {global, validateInput, convertURIToPhrase, URI, CUM_TU, groupQuestionByURI} from '../../const';
 
 import banner from './../../public/static/images/banner.jpg';
 
@@ -62,7 +62,7 @@ class RecommentQuestion extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, category } = this.props;
     const { questionPhrase, redirect, type, questionURI } = this.state;
     if (data.length <= 0) {
       return null;
@@ -70,7 +70,8 @@ class RecommentQuestion extends Component {
     if (redirect) {
       return <Redirect to={{ pathname: redirect, state: { question: questionURI, type } }} />
     }
-    const { questions, categories } = data;
+    const { categories } = data;
+    const {questions} = category;
     return (
       <div className='site-content'>
         <div className='top-header-content'>
@@ -83,7 +84,7 @@ class RecommentQuestion extends Component {
           <SearchSession value={ questionPhrase } handleSubmit={ this.handleSubmit } handleChange={ this.handleChange } />
         </header>
         <main className='main-content'>
-            <QuestionsSession questions={questions} findTopicFollowAskQuestionSession={ this.findByURI }/>
+            <QuestionsSession questions={groupQuestionByURI(questions)} findTopicFollowAskQuestionSession={ this.findByURI }/>
             <TopicsSession categories={categories} findTopicFollowTopicSession={this.findByURI} />
         </main>
         <Footer />
