@@ -42,12 +42,12 @@ export const knowledgeAttrs = [
 ];
 
 export const keyURIType = {
-    chuyende: 'chuyende_',
-    khoilop: 'khoi_lop',
-    nhomkienthuc: 'nhomkienthuc_',
-    kienthuc: 'kienthuc_',
-    hinhhoc: 'hinhhoc_',
-    noidung: 'noidung_'
+    chuyende: '#chuyende_',
+    khoilop: '#khoi_lop',
+    nhomkienthuc: '#nhomkienthuc_',
+    kienthuc: '#kienthuc_',
+    hinhhoc: '#hinhhoc_',
+    noidung: '#noidung_'
 }
 
 export const validateInput = /[`!@#$%^&*()_+\-=[\]{}'"\\|<>/~]/;
@@ -55,11 +55,9 @@ export const validateInput = /[`!@#$%^&*()_+\-=[\]{}'"\\|<>/~]/;
 // ****************Functions*******************
 
 export const removeAccents = (str) => {
-    return str.toLowerCase().normalize('NFD')
+    return str.toLowerCase()
         .replace(/ +(?= )/g,'')
-        .replace(/^\s+|\s+$/gm,'')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+        .replace(/^\s+|\s+$/gm,'');
 }
 
 export const returnURIByType = (uri) => {
