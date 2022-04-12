@@ -27,7 +27,25 @@ const groupNameByURI = (arr, uris) => {
     const result = (uris || []).map(i => i.uri);
     return result;
 }
-
+const searchPharseTwo = (qs, array) => {
+    const arr1 = [];
+    ([...array] || []).map(i => {
+        const nameArr = i.name.split(' ');
+        let length = 0;
+        (nameArr || []).map(j => {
+            if (qs.indexOf(j) !== -1) {
+                length ++;
+            }
+            return j;
+        });
+        
+        if (length === nameArr.length) {
+            arr1.push(i);
+        }
+        return i;
+    });
+    return arr1 && arr1.length ? arr1.map(i => i.uri) : null;
+}
 const searchFullKey = (qs, array) => {
     const arr = (array || []).filter(item => item.name === qs);
     return arr && arr.length ? arr.map(i => i.uri) : null;
@@ -62,9 +80,24 @@ const searchKeywordToFindURI = (question, keywordList) => {
                         const kienThucQs = questions.filter(i => i.uri.indexOf(keyURIType.kienthuc) !== -1);
                         results = searchFullKey(question, kienThucQs);
                         if (!results) {
-                            const arr2 = (keywords || []).filter(item => question.indexOf(item.name) !== -1);
-                            if (arr2 && arr2.length > 0) {
-                                results = groupNameByURI(arr2, uris);
+                            results = searchPharseTwo(question, kienThucQs);
+                            if (!results) {
+                                results = searchPharseTwo(question, nhomKienThucQs);
+                                if (!results) {
+                                    results = searchPharseTwo(question, chuyenDeQs);
+                                    if (!results) {
+                                        results = searchPharseTwo(question, khoiLopQs);
+                                        if (!results) {
+                                            results = searchPharseTwo(question, hinhHocQs);
+                                            if (!results) {
+                                                const arr2 = (keywords || []).filter(item => question.indexOf(item.name) !== -1);
+                                                if (arr2 && arr2.length > 0) {
+                                                    results = groupNameByURI(arr2, uris);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
