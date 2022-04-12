@@ -42,7 +42,7 @@ export function getResultFinding(uri) {
 }
 
 export function returnSparqlUrl(query) {
-	const HOT_URL = 'http://192.168.1.129:3030/Math/sparql?query=';
+	const HOT_URL = 'http://localhost:3030/Math/sparql?query=';
 	const prefix = {
 		RDF: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>',
 		myPREFIX: 'prefix my: <http://www.owl-ontologies.com/kienthuchinhhoc.owl#>',
